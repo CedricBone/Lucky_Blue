@@ -12,9 +12,9 @@ contract LuckyBlue {
     address[] public players;
     Vendor[] public vendors;
     uint256 numGames = 0;
-    uint256 vendorFee = 1;
-    uint256 playerFee = 10;
-    uint256 addGameFee = 5;
+    uint256 vendorFee = 2;
+    uint256 playerFee = 2;
+    uint256 addGameFee = 1;
 
     struct Vendor {
         address payable vendorAddress;
