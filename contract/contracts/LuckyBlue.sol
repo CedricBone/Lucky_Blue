@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.10;
 
-contract LuckyBule {
+contract LuckyBlue {
     receive() external payable {}
 
     fallback() external payable {}
@@ -22,8 +22,8 @@ contract LuckyBule {
     }
 
     constructor() payable {
-        cedric = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
-        jack = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
+        cedric = 0x37813e4e4C751F902763FF5A00337Bb715a79A79;
+        jack = 0xf667Eb467304D505B9fD484Aa622B9213c1B8920;
         ContractValue = msg.value;
     }
 
@@ -40,6 +40,10 @@ contract LuckyBule {
             payable(msg.sender) == jack || payable(msg.sender) == cedric,
             "You are not an owner"
         );
+
+        uint256 ownerCut = msg.value/2;
+        payable(jack).transfer(ownerCut);
+        payable(cedric).transfer(ownerCut);
         //payable(cedric).transfer(msg.value);
         bool sent = payable(msg.sender).send(msg.value);
         require(sent, "Failed to send Ether");
@@ -56,8 +60,10 @@ contract LuckyBule {
         players.push(payable(msg.sender)); //added to list
         //require(numGames > 0, "No Games");
         uint256 vendorCut = msg.value / 2;
+       // uint256 ownerCut = msg.value / 2;
         ContractValue = address(this).balance + (msg.value / 2);
         PayVendors(uint256(vendorCut)); //sends cut to vendors
+        //PayOwners(uint256(ownerCut)); //sends cut to owners
     }
 
     // Deregisters a player
@@ -86,6 +92,8 @@ contract LuckyBule {
             Vendor({vendorAddress: payable(msg.sender), numVendorGames: 0})
         ); //added to list
         ContractValue = address(this).balance + msg.value;
+       // uint256 OwnerCut = msg.value;
+       // PayOwners(OwnerCut); //sends cut to vendors
     }
 
     // Deregisters a Vendor
@@ -129,6 +137,14 @@ contract LuckyBule {
         }
         ContractValue = address(this).balance - vendorCut;
     }
+
+
+    //  function PayOwners(uint256 ownerCut) public payable {
+    //     uint256 pay = ownerCut/2;
+    //     payable(jack).transfer(pay);
+    //     payable(cedric).transfer(pay);
+    //     ContractValue = address(this).balance - ownerCut;
+    // }
 
     //adds a game to from a vendor
     function AddGame() public payable {

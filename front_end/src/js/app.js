@@ -2,7 +2,7 @@
 App = {
   web3: null,
   contracts: {},
-  address: '0xe54F592FB614bAa9a1486713AA7788116ae79420', //contract
+  address: '0x84437129672044cE66Fd8A04ca47fB2D6fED0A60', //contract
   network_id: 3, // 5777 for local
   handler: null,
   value: 1000000000000000000,
@@ -10,6 +10,26 @@ App = {
   margin: 10,
   left: 15,
   init: function () {
+   //localStorage.clear();
+    console.log(localStorage);
+
+    for (const [key, value] of Object.entries(localStorage)) {
+      console.log(key, value);
+      
+      game_name = key;
+      game_url = value;
+
+      var game_button = document.createElement("button");
+      game_button.setAttribute("id", game_name);
+      game_button.setAttribute("class", "button");
+      game_button.textContent = game_name;
+      game_button.setAttribute("onclick", "window.location.href = '" + game_url + "';");
+
+
+      var container = document.getElementById("games");
+      container.appendChild(game_button);
+
+   }
     return App.initWeb3();
   },
 
@@ -39,12 +59,16 @@ App = {
     });
 
     $(document).on('click', '#register_player', function () {
-      App.registerPlayer();
+      App.handleRegisterPlayer();
     });
 
-    $(document).on('click', '#registerPlayerInfo', function () {
-      App.registerPlayerInfo();
+    $(document).on('click', '#deregister_player', function () {
+      App.handleDeregisterPlayer();
     });
+
+    // $(document).on('click', '#registerPlayerInfo', function () {
+    //   App.registerPlayerInfo();
+    // });
 
     $(document).on('click', '#add_game', function () {
       App.addGame();
@@ -52,6 +76,15 @@ App = {
 
     $(document).on('click', '#add_game_submit', function () {
       App.addGameInfo();
+    });
+
+
+    $(document).on('click', '#extract', function () {
+      App.Extract();
+    });
+
+    $(document).on('click', '#extract_submit', function () {
+      App.ExtractInfo();
     });
   },
 
@@ -66,7 +99,7 @@ App = {
     App.contracts.LuckyBlue.methods.RegisterVendor()
       .send({
         from: ethereum.selectedAddress
-        , value: 12000000000000000000
+        , value: 2000000000000000000
       })
       .on('receipt', (receipt) => {
         if (receipt.status) {
@@ -91,22 +124,37 @@ App = {
   },
 
 
-  registerPlayer: function () {
-    console.log("Register Player");
-    document.getElementById("player_popup").style.display = "block";
-  },
+  // registerPlayer: function () {
+  //   console.log("Register Player");
+  //   document.getElementById("player_popup").style.display = "block";
+  // },
 
-  registerPlayerInfo: function () {
-    console.log("Register Player Info Called");
-    var register_player_fee = document.getElementById("player_fee").value;
-    console.log("player fee: ", register_player_fee);
-    console.log("eth player fee: ", ((register_player_fee) * Math.pow(10, 18)));
-    document.getElementById("player_popup").style.display = "none";
-    var option = { from: App.handler }
+  // registerPlayerInfo: function () {
+  //   console.log("Register Player Info Called");
+  //   var register_player_fee = document.getElementById("player_fee").value;
+  //   console.log("player fee: ", register_player_fee);
+  //   console.log("eth player fee: ", ((register_player_fee) * Math.pow(10, 18)));
+  //   document.getElementById("player_popup").style.display = "none";
+  //   var option = { from: App.handler }
+  //   App.contracts.LuckyBlue.methods.RegisterPlayer()
+  //     .send({
+  //       from: ethereum.selectedAddress
+  //       , value: register_player_fee * Math.pow(10, 18)
+  //     })
+  //     .on('receipt', (receipt) => {
+  //       if (receipt.status) {
+  //         toastr.success("Player registered");
+  //       }
+  //     })
+  // },
+
+
+  handleRegisterPlayer: function () {
+    console.log("handle register player Called");
     App.contracts.LuckyBlue.methods.RegisterPlayer()
       .send({
         from: ethereum.selectedAddress
-        , value: register_player_fee * Math.pow(10, 18)
+        , value: 2000000000000000000
       })
       .on('receipt', (receipt) => {
         if (receipt.status) {
@@ -114,6 +162,21 @@ App = {
         }
       })
   },
+
+
+  handleDeregisterPlayer: function (){
+    console.log("handle deregisterPlayer called");
+    App.contracts.LuckyBlue.methods.DeregisterPlayer()
+      .send({
+        from: ethereum.selectedAddress
+      })
+      .on('receipt', (receipt) => {
+        if (receipt.status) {
+          toastr.success("Player Deregistered");
+        }
+      })
+  },
+
 
 
   addGame: function () {
@@ -140,13 +203,62 @@ App = {
     App.contracts.LuckyBlue.methods.AddGame()
       .send({
         from: ethereum.selectedAddress,
-        value: 5000000000000000000
+        value: 1000000000000000000
       })
       .on('receipt', (receipt) => {
         if (receipt.status) {
           toastr.success("Vendor registered");
         }
       })
+
+      localStorage.setItem(game_name, game_url);
+      console.log(localStorage);
+
+    //   for (const [key, value] of Object.entries(localStorage)) {
+    //     console.log(key, value);
+        
+    //     game_name = key;
+    //     game_url = value;
+
+    //     var game_button = document.createElement("button");
+    //     game_button.setAttribute("id", game_name);
+    //     game_button.setAttribute("class", "button");
+    //     game_button.textContent = game_name;
+    //     game_button.setAttribute("onclick", "window.location.href = '" + game_url + "';");
+
+
+    //     var container = document.getElementById("games");
+    //     container.appendChild(game_button);
+
+    //  }
+  },
+
+  Extract: function () {
+    console.log("Extract called");
+    document.getElementById("extract_popup").style.display = "block";
+
+  },
+
+  ExtractInfo: function(){
+    console.log("Extract Info called");
+
+    var extract_amount = document.getElementById("extract_amount").value;
+    console.log("extract amount: ", extract_amount);
+    console.log("eth extract amount: ", ((extract_amount) * Math.pow(10, 18)));
+    document.getElementById("extract_popup").style.display = "none";
+
+    App.contracts.LuckyBlue.methods.extractValue()
+    .send({
+      from: ethereum.selectedAddress,
+      value: ((extract_amount) * Math.pow(10, 18))
+    })
+    .on('receipt', (receipt) => {
+      if (receipt.status) {
+        toastr.success("Extract Succesful");
+      }
+    })
+
+
   },
 
   abi: [

@@ -2,45 +2,45 @@ body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color: blue;
-}
-
-#UB_logo {
-    float: left;
-
-}
-
-#about_us {
-    position: absolute;
-    top: 50px;
-    right: 25px;
-
-}
-
-#slots {
-    float: left;
-    display: inline;
-    padding-right: 50px;
-}
-
-#roulette {
-    float: left;
-    display: inline;
-}
-
-#additional_buttons {
-    /* float: bottom;
-      padding-top: 100px; /
+  }
+  
+  #UB_logo{
+      float: left;
+      
+  }
+  
+  #about_us{
+      position: absolute;
+      top: 50px;
+      right: 25px;
+  
+  }
+  
+  #slots{
+      float: left;
+      display: inline;
+      padding-right: 50px;
+  }
+  
+  #roulette{
+      float: left;
+      display: inline;
+  }
+  
+  #additional_buttons{
+      /* float: bottom;
+      padding-top: 100px; */
       text-align: right;
       float: top;
-  
+      
   }
   
   
   .popupForm{
       display: none;
       position: fixed;
-      / position: absolute; /
-      / right: 15%; /
+      /* position: absolute; */
+      /* right: 15%; */
       left: 40%;
       top: 75%;
       transform: translate(-50%, 5%);
@@ -49,7 +49,7 @@ body {
       background-color: grey;
       color: white;
       font-size:20px;
-  
+      
   }
   
   
@@ -64,30 +64,35 @@ body {
       background-color: white;
       color: blue;
       text-align: center;
-      / padding-top: 30px; */
-    font-size: 20px;
-    border-radius: 25px;
-}
-
-a {
+      /* padding-top: 30px; */
+      font-size: 20px;
+      border-radius: 25px;
+  }
+  
+  a {
     color: #00B7FF;
-}
+  }
+  
+  
+  #connect_wallet_row{
+      padding-bottom: 40px;
+  }
+  
+  #player_buttons{
+      padding-bottom: 40px;
+  }
+  
+  #vendor_buttons{
+      padding-bottom: 40px;
+  }
+  
+  #games{
+      text-align: center;
+  
+  
+  }
 
-
-#connect_wallet_row {
-    padding-bottom: 40px;
-}
-
-#player_buttons {
-    padding-bottom: 40px;
-}
-
-#vendor_buttons {
-    padding-bottom: 40px;
-}
-
-#games {
-    text-align: center;
-
-
-}
+  /* .text_center{
+      text-align: center;
+      width: 50%;
+  } */

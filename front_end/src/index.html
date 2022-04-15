@@ -12,13 +12,13 @@
 
 <body>
 
-  <script>
+  <!-- <script>
     async function getData() {
       const response = await fetch('/api');
       const data = await response.json();
       console.log(data);
     }
-  </script>
+  </script> -->
 
   <div id="homepage">
     <img id="UB_logo" alt="140x140" style="width: 140px; height: 200px;" src="images/UB.png"
@@ -26,8 +26,8 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Lucky Blue Casino</h1>
+        <div>
+          <h1 class="text-center" style="text-align: center;">Lucky Blue Games</h1>
           <br />
         </div>
       </div>
@@ -41,27 +41,36 @@
     <button class="button" onclick="window.location.href='https://github.com/CedricBone/Blockchain-Casino';"
       type="button" id="about_us"> About Us </button>
 
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
     <div id="player_buttons">
       <button class="button" type="button" id="register_player">Register Player</button>
-      <button class="button" type="button" id="deregister_player" onclick="deregisterPlayer()">Deregister
-        Player</button>
-      <div class="popupForm" id="player_popup">
+      <button class="button" type="button" id="deregister_player">Deregister Player</button>
+      <!-- <div class="popupForm" id="player_popup">
         <form id="form2">
           Player Fee<input type="text" id="player_fee">
         </form>
         <button class="form_submit" id="registerPlayerInfo">Submit</button>
-      </div>
+      </div> -->
     </div>
 
     <div id="vendor_buttons">
       <button class="button" type="button" id="register_vendor">Register Vendor</button>
       <button class="button" type="button" id="deregister_vendor">Deregister Vendor</button>
-      <div class="popupForm" id="vendor_popup">
+      <!-- <div class="popupForm" id="vendor_popup">
         <form id="form3">
           Vendor Fee<input id="vendor_fee" type="text">
         </form>
         <button class="form_submit" onclick="registerVendorInfo()">Submit</button>
-      </div>
+      </div> -->
     </div>
 
     <div id="game_buttons">
@@ -74,15 +83,36 @@
         <button class="form_submit" id="add_game_submit">Submit</button>
       </div>
     </div>
+
+    <br>
+    <br>
+    <div id="extract_button">
+      <button class="button" type="button" id="extract">Extract Funds</button>
+      <div class="popupForm" id="extract_popup">
+        <form id="form4">
+          Extract Amount<input id="extract_amount" type="text">
+        </form>
+        <button class="form_submit" id="extract_submit">Submit</button>
+      </div>
+    </div>
+
+
+    
+
+    
+
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="js/dist/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <script src="js/dist/truffle-contract.js"></script>
+  <!-- <script data-main="js/app.js" src="js/require.js"></script> -->
   <script src="js/app.js"></script>
+  
 
-  <script>
+
+  <!-- <script>
     const button = document.getElementById('add_game_submit');
     button.addEventListener('click', async event => {
       var _name = document.getElementById('game_name').value;
@@ -97,15 +127,20 @@
       };
       const response = await fetch('/api', options);
       const json = await response.json();
+      //return response;
       console.log(json);
+     // return json;
+      //return
     });
   </script>
 
   <script>
     getData();
     async function getData() {
-      const response = await fetch('/api');
-      const data = await response.json();
+    const response = await fetch('/api');
+    const data = await response.json();
+      //return response;
+     // return data;
       console.log(data);
 
       for (var i = 0; i < data.length; i++) {
@@ -124,8 +159,10 @@
         container.appendChild(game_button);
         //document.getElementById("add_game_popup").style.display = "none";
       }
-    }
-  </script>
+      return 
+
+   }
+  </script> -->
 
 </body>
 
