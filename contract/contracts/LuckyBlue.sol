@@ -79,7 +79,7 @@ contract LuckyBlue {
 
     // Registers a Vendor
     function RegisterVendor() public payable {
-        require(msg.value >= vendorFee, "Not enough Blue Coin!"); //takes inital game and payment
+        require(msg.value >= vendorFee, "Not enough Blue Coin!");
         require(
             CheckVendor(payable(msg.sender)) == false,
             "You are already a vendor"
@@ -123,11 +123,9 @@ contract LuckyBlue {
 
     //pays vendors thier cut
     function PayVendors(uint256 vendorCut) public payable {
-        uint256 payPerGame = vendorCut / numGames;
+        uint256 vendorPayment = vendorCut / vendors.length;
         for (uint256 i = 0; i < vendors.length; i++) {
-            vendors[i].vendorAddress.transfer(
-                (payPerGame * vendors[i].numVendorGames)
-            );
+            vendors[i].vendorAddress.transfer((vendorPayment));
         }
         ContractValue = address(this).balance - vendorCut;
     }
