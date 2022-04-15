@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucky Blue Casino</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <script>
+    async function getData() {
+      const response = await fetch('/api');
+      const data = await response.json();
+      console.log(data);
+    }
+  </script>
+
+  <div id="homepage">
+    <img id="UB_logo" alt="140x140" style="width: 140px; height: 200px;" src="images/UB.png"
+      data-holder-rendered="true">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">Lucky Blue Casino</h1>
+          <br />
+        </div>
+      </div>
+      <div id="proposalsRow" class="row">
+      </div>
+    </div>
+
+    <div id="games">
+    </div>
+
+    <button class="button" onclick="window.location.href='https://github.com/CedricBone/Blockchain-Casino';"
+      type="button" id="about_us"> About Us </button>
+
+    <div id="player_buttons">
+      <button class="button" type="button" id="register_player">Register Player</button>
+      <button class="button" type="button" id="deregister_player" onclick="deregisterPlayer()">Deregister
+        Player</button>
+      <div class="popupForm" id="player_popup">
+        <form id="form2">
+          Player Fee<input type="text" id="player_fee">
+        </form>
+        <button class="form_submit" id="registerPlayerInfo">Submit</button>
+      </div>
+    </div>
+
+    <div id="vendor_buttons">
+      <button class="button" type="button" id="register_vendor">Register Vendor</button>
+      <button class="button" type="button" id="deregister_vendor">Deregister Vendor</button>
+      <div class="popupForm" id="vendor_popup">
+        <form id="form3">
+          Vendor Fee<input id="vendor_fee" type="text">
+        </form>
+        <button class="form_submit" onclick="registerVendorInfo()">Submit</button>
+      </div>
+    </div>
+
+    <div id="game_buttons">
+      <button class="button" type="button" id="add_game">Add Game</button>
+      <div class="popupForm" id="add_game_popup">
+        <form id="form1">
+          Game Name<input id="game_name" type="text">
+          Game URL<input id="game_url" type="text">
+        </form>
+        <button class="form_submit" id="add_game_submit">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/dist/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="js/dist/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    const button = document.getElementById('add_game_submit');
+    button.addEventListener('click', async event => {
+      var _name = document.getElementById('game_name').value;
+      var _url = document.getElementById('game_url').value;
+      const data = { _name, _url };
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      };
+      const response = await fetch('/api', options);
+      const json = await response.json();
+      console.log(json);
+    });
+  </script>
+
+  <script>
+    getData();
+    async function getData() {
+      const response = await fetch('/api');
+      const data = await response.json();
+      console.log(data);
+
+      for (var i = 0; i < data.length; i++) {
+
+        game_name = data[i]._name;
+        game_url = data[i]._url;
+
+        var game_button = document.createElement("button");
+        game_button.setAttribute("id", game_name);
+        game_button.setAttribute("class", "button");
+        game_button.textContent = game_name;
+        game_button.setAttribute("onclick", "window.location.href = '" + game_url + "';");
+
+
+        var container = document.getElementById("games");
+        container.appendChild(game_button);
+        //document.getElementById("add_game_popup").style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

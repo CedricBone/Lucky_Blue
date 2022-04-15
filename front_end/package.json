@@ -1,0 +1,16 @@
+{
+  "name": "lucky-blue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "express": "^4.16.4",
+    "nedb": "^1.8.0"
+  }
+}
