@@ -41,10 +41,9 @@ contract LuckyBlue {
             "You are not an owner"
         );
 
-        uint256 ownerCut = msg.value/2;
+        uint256 ownerCut = msg.value / 2;
         payable(jack).transfer(ownerCut);
         payable(cedric).transfer(ownerCut);
-        //payable(cedric).transfer(msg.value);
         bool sent = payable(msg.sender).send(msg.value);
         require(sent, "Failed to send Ether");
         ContractValue = address(this).balance - (msg.value);
@@ -58,12 +57,9 @@ contract LuckyBlue {
             "You are already a player"
         );
         players.push(payable(msg.sender)); //added to list
-        //require(numGames > 0, "No Games");
         uint256 vendorCut = msg.value / 2;
-       // uint256 ownerCut = msg.value / 2;
         ContractValue = address(this).balance + (msg.value / 2);
         PayVendors(uint256(vendorCut)); //sends cut to vendors
-        //PayOwners(uint256(ownerCut)); //sends cut to owners
     }
 
     // Deregisters a player
@@ -92,8 +88,6 @@ contract LuckyBlue {
             Vendor({vendorAddress: payable(msg.sender), numVendorGames: 0})
         ); //added to list
         ContractValue = address(this).balance + msg.value;
-       // uint256 OwnerCut = msg.value;
-       // PayOwners(OwnerCut); //sends cut to vendors
     }
 
     // Deregisters a Vendor
@@ -137,14 +131,6 @@ contract LuckyBlue {
         }
         ContractValue = address(this).balance - vendorCut;
     }
-
-
-    //  function PayOwners(uint256 ownerCut) public payable {
-    //     uint256 pay = ownerCut/2;
-    //     payable(jack).transfer(pay);
-    //     payable(cedric).transfer(pay);
-    //     ContractValue = address(this).balance - ownerCut;
-    // }
 
     //adds a game to from a vendor
     function AddGame() public payable {
