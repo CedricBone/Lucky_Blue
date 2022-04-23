@@ -2,7 +2,8 @@
 App = {
   web3: null,
   contracts: {},
-  address: '0x84437129672044cE66Fd8A04ca47fB2D6fED0A60', //contract
+  address: '0xb4B4011560f8CfdCfF4b740b5F82F71ab7d6D2c5', //contract
+  address2: '0xf88f91E52b731e86092bB05De15842005409ABb4',
   network_id: 3, // 5777 for local
   handler: null,
   value: 1000000000000000000,
@@ -10,12 +11,12 @@ App = {
   margin: 10,
   left: 15,
   init: function () {
-   //localStorage.clear();
+    //localStorage.clear();
     console.log(localStorage);
 
     for (const [key, value] of Object.entries(localStorage)) {
       console.log(key, value);
-      
+
       game_name = key;
       game_url = value;
 
@@ -29,7 +30,7 @@ App = {
       var container = document.getElementById("games");
       container.appendChild(game_button);
 
-   }
+    }
     return App.initWeb3();
   },
 
@@ -45,6 +46,7 @@ App = {
 
   initContract: function () {
     App.contracts.LuckyBlue = new App.web3.eth.Contract(App.abi, App.address, {});
+    App.contracts.BlueCoin = new App.web3.eth.Contract(App.abi2, App.address2, {});
     return App.bindEvents();
   },
 
@@ -66,10 +68,6 @@ App = {
       App.handleDeregisterPlayer();
     });
 
-    // $(document).on('click', '#registerPlayerInfo', function () {
-    //   App.registerPlayerInfo();
-    // });
-
     $(document).on('click', '#add_game', function () {
       App.addGame();
     });
@@ -86,6 +84,10 @@ App = {
     $(document).on('click', '#extract_submit', function () {
       App.ExtractInfo();
     });
+
+    $(document).on('click', '#exchange_coin', function () {
+      App.Exchange();
+    });
   },
 
   populateAddress: function () {
@@ -99,7 +101,7 @@ App = {
     App.contracts.LuckyBlue.methods.RegisterVendor()
       .send({
         from: ethereum.selectedAddress
-        , value: 2000000000000000000
+        , value: 500000000000000000
       })
       .on('receipt', (receipt) => {
         if (receipt.status) {
@@ -123,32 +125,6 @@ App = {
 
   },
 
-
-  // registerPlayer: function () {
-  //   console.log("Register Player");
-  //   document.getElementById("player_popup").style.display = "block";
-  // },
-
-  // registerPlayerInfo: function () {
-  //   console.log("Register Player Info Called");
-  //   var register_player_fee = document.getElementById("player_fee").value;
-  //   console.log("player fee: ", register_player_fee);
-  //   console.log("eth player fee: ", ((register_player_fee) * Math.pow(10, 18)));
-  //   document.getElementById("player_popup").style.display = "none";
-  //   var option = { from: App.handler }
-  //   App.contracts.LuckyBlue.methods.RegisterPlayer()
-  //     .send({
-  //       from: ethereum.selectedAddress
-  //       , value: register_player_fee * Math.pow(10, 18)
-  //     })
-  //     .on('receipt', (receipt) => {
-  //       if (receipt.status) {
-  //         toastr.success("Player registered");
-  //       }
-  //     })
-  // },
-
-
   handleRegisterPlayer: function () {
     console.log("handle register player Called");
     App.contracts.LuckyBlue.methods.RegisterPlayer()
@@ -164,7 +140,7 @@ App = {
   },
 
 
-  handleDeregisterPlayer: function (){
+  handleDeregisterPlayer: function () {
     console.log("handle deregisterPlayer called");
     App.contracts.LuckyBlue.methods.DeregisterPlayer()
       .send({
@@ -211,26 +187,8 @@ App = {
         }
       })
 
-      localStorage.setItem(game_name, game_url);
-      console.log(localStorage);
-
-    //   for (const [key, value] of Object.entries(localStorage)) {
-    //     console.log(key, value);
-        
-    //     game_name = key;
-    //     game_url = value;
-
-    //     var game_button = document.createElement("button");
-    //     game_button.setAttribute("id", game_name);
-    //     game_button.setAttribute("class", "button");
-    //     game_button.textContent = game_name;
-    //     game_button.setAttribute("onclick", "window.location.href = '" + game_url + "';");
-
-
-    //     var container = document.getElementById("games");
-    //     container.appendChild(game_button);
-
-    //  }
+    localStorage.setItem(game_name, game_url);
+    console.log(localStorage);
   },
 
   Extract: function () {
@@ -239,7 +197,7 @@ App = {
 
   },
 
-  ExtractInfo: function(){
+  ExtractInfo: function () {
     console.log("Extract Info called");
 
     var extract_amount = document.getElementById("extract_amount").value;
@@ -248,17 +206,32 @@ App = {
     document.getElementById("extract_popup").style.display = "none";
 
     App.contracts.LuckyBlue.methods.extractValue()
-    .send({
-      from: ethereum.selectedAddress,
-      value: ((extract_amount) * Math.pow(10, 18))
-    })
-    .on('receipt', (receipt) => {
-      if (receipt.status) {
-        toastr.success("Extract Succesful");
-      }
-    })
+      .send({
+        from: ethereum.selectedAddress,
+        value: ((extract_amount) * Math.pow(10, 18))
+      })
+      .on('receipt', (receipt) => {
+        if (receipt.status) {
+          toastr.success("Extract Succesful");
+        }
+      })
 
 
+  },
+
+  Exchange: function () {
+    console.log(ethereum.selectedAddress);
+    App.contracts.BlueCoin.methods.transfer(ethereum.selectedAddress, 1000)
+      .send({
+        from: '0x6a88ee1DAd24DE5C1A2440B53Fad30CCFe479817',
+        //to: ethereum.selectedAddress
+        //value: 1000
+      })
+      .on('receipt', (receipt) => {
+        if (receipt.status) {
+          toastr.success("Exchange Succesful");
+        }
+      })
   },
 
   abi: [
@@ -457,6 +430,249 @@ App = {
         {
           "internalType": "uint256",
           "name": "numVendorGames",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+
+  abi2: [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "total",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "tokenOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegate",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "numTokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "close",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "numTokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "numTokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "delegate",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokenOwner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
           "type": "uint256"
         }
       ],

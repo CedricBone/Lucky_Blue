@@ -22,8 +22,8 @@ contract LuckyBlue {
     }
 
     constructor() payable {
-        cedric = 0x37813e4e4C751F902763FF5A00337Bb715a79A79;
-        jack = 0xf667Eb467304D505B9fD484Aa622B9213c1B8920;
+        cedric = 0xb9b5f104e5154C86fc20fBa9d0AF0fE3eB7ed7F5;
+        jack = 0x7d920c5EE04b188E906292bfe078229de3c6b144;
         ContractValue = msg.value;
     }
 
