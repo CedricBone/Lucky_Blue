@@ -2,8 +2,12 @@
 App = {
   web3: null,
   contracts: {},
+<<<<<<< HEAD
   address: '0xb4B4011560f8CfdCfF4b740b5F82F71ab7d6D2c5', //contract
   address2: '0xf88f91E52b731e86092bB05De15842005409ABb4',
+=======
+  address: '0x3a07084C1E41834080d55F037d6ADb4AcFb49905', //contract
+>>>>>>> 51bf2a1fe59e06568c9e72d640c92afb89151a2b
   network_id: 3, // 5777 for local
   handler: null,
   value: 1000000000000000000,
