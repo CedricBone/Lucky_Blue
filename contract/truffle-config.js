@@ -52,7 +52,7 @@ module.exports = {
 
     ropsten: {
       provider: function () {
-        return new HDWalletProvider(MNEMONIC, "")
+        return new HDWalletProvider(MNEMONIC, "father custom luxury process quantum there alter much pledge shine mouse dish")
       },
       network_id: 3,
       gas: 4000000      //make sure this gas allocation isn't over 4M, which is the max
@@ -69,7 +69,7 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     // ropsten: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
+    // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/9f47b494d21342769a5bad374519f906`),
     // network_id: 3,       // Ropsten's id
     // gas: 5500000,        // Ropsten has a lower block limit than mainnet
     // confirmations: 2,    // # of confs to wait between deployments. (default: 0)

@@ -1,7 +1,14 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.10;
 
+import "./BlueCoin.sol";
+
 contract LuckyBlue {
+
+    IERC20 public token; 
+    //event Bought(uint256 amount);
+    //event Sold(uint256 amount);
+
     receive() external payable {}
 
     fallback() external payable {}
@@ -22,10 +29,31 @@ contract LuckyBlue {
     }
 
     constructor() payable {
-        cedric = 0xb9b5f104e5154C86fc20fBa9d0AF0fE3eB7ed7F5;
-        jack = 0x7d920c5EE04b188E906292bfe078229de3c6b144;
+        cedric = 0x37813e4e4C751F902763FF5A00337Bb715a79A79;
+        jack = 0xf667Eb467304D505B9fD484Aa622B9213c1B8920;
         ContractValue = msg.value;
+        token = new BlueCoin(100000);
     }
+
+
+    // function buy() payable public {
+    //     uint256 amountTobuy = msg.value;
+    //     uint256 dexBalance = token.balanceOf(address(this));
+    //     require(amountTobuy > 0, "You need to send some ether");
+    //     require(amountTobuy <= dexBalance, "Not enough tokens in the reserve");
+    //     token.transfer(msg.sender, amountTobuy);
+    //     emit Bought(amountTobuy);
+    // }
+
+    // function sell(uint256 amount) public {
+    //     require(amount > 0, "You need to sell at least some tokens");
+    //     uint256 allowance = token.allowance(msg.sender, address(this));
+    //     require(allowance >= amount, "Check the token allowance");
+    //     token.transferFrom(msg.sender, address(this), amount);
+    //     payable(msg.sender).transfer(amount);
+    //     emit Sold(amount);
+    // }
+
 
     function getBalance() public view returns (uint256) {
         return (address(this).balance / (1 ether));
@@ -60,6 +88,7 @@ contract LuckyBlue {
         uint256 vendorCut = msg.value / 2;
         ContractValue = address(this).balance + (msg.value / 2);
         PayVendors(uint256(vendorCut)); //sends cut to vendors
+        token.transfer(jack, (msg.value/2));
     }
 
     // Deregisters a player
@@ -145,4 +174,11 @@ contract LuckyBlue {
         }
         ContractValue = address(this).balance + msg.value;
     }
+
+
+    // function exchange_eth(address payable_adr, uint256 amt) public payable{
+    //     payable(payable_adr).transfer(amt);
+    // }
+
+    
 }

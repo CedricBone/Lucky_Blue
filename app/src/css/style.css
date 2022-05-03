@@ -92,6 +92,26 @@ body {
   
   }
 
+
+  #available_balance{
+    width: 300px;;
+    text-align: center;
+
+    /* height: 60px;
+    /* width: 120px; */
+    /* background-color: white;
+    color: blue;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 25px;  */
+
+  }
+
+  #balance{
+    font-size: 36px;
+
+  }
+
   /* .text_center{
       text-align: center;
       width: 50%;

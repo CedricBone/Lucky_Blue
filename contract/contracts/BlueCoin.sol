@@ -1,7 +1,25 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.10;
 
-contract BlueCoin {
+
+interface IERC20 {
+
+    function totalSupply() external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    function transfer(address recipient, uint256 amount) external payable returns (bool);
+    function approve(address spender, uint256 amount) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+
+
+    //event Transfer(address indexed from, address indexed to, uint256 value);
+    //event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
+
+contract BlueCoin is IERC20{
+//contract BlueCoin{
     string public constant name = "Blue Coin";
     string public constant symbol = "BLU";
     uint8 public constant decimals = 2;
@@ -46,8 +64,14 @@ contract BlueCoin {
         balances[msg.sender] = balances[msg.sender].sub(numTokens);
         balances[receiver] = balances[receiver].add(numTokens);
         emit Transfer(msg.sender, receiver, numTokens);
+        //payable(ERCowner).transfer(numTokens);
+       // payOwner(numTokens);
         return true;
     }
+
+    // function payOwner(uint256 exchange_amount) public payable{
+    //     payable(ERCowner).transfer(exchange_amount);
+    // }
 
     function approve(address delegate, uint256 numTokens)
         public

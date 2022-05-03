@@ -29,11 +29,15 @@
         <div>
           <h1 class="text-center" style="text-align: center;">Lucky Blue Games</h1>
           <br />
+          <button id="available_balance" class="button">Show Available Balance:</button>
+          <h2 class="text-center" style="text-align: center;" id="balance"></h2>
         </div>
       </div>
       <div id="proposalsRow" class="row">
       </div>
     </div>
+    <br>
+    <br>
 
     <div id="games">
     </div>
@@ -76,13 +80,21 @@
     <div id="game_buttons">
       <button class="button" type="button" id="add_game">Add Game</button>
       <button class="button" type="button" id="exchange_coin">Exchange</button>
+
       <div class="popupForm" id="add_game_popup">
         <form id="form1">
           Game Name<input id="game_name" type="text">
           Game URL<input id="game_url" type="text">
         </form>
         <button class="form_submit" id="add_game_submit">Submit</button>
-      </div>
+    </div>
+
+    <div class="popupForm" id="exchange_popup">
+      <form id="form5">
+        Address<input id="send_address" type="text">
+        Amount<input id="send_amount" type="text">
+      </form>
+      <button class="form_submit" id="exchange_submit">Submit</button>
     </div>
 
     <br>
@@ -96,6 +108,14 @@
         <button class="form_submit" id="extract_submit">Submit</button>
       </div>
     </div>
+
+
+    <br>
+    <br>
+    <!-- <div id="erc_functions">
+      <button class="button" type="button" id="Buy">Buy BLU</button>
+      <button class="button" type="button" id="Sell">Sell BLU</button>
+    </div> -->
 
 
 
