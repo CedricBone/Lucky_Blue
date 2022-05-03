@@ -33,10 +33,10 @@ contract LuckyBlue {
         cedric = 0x37813e4e4C751F902763FF5A00337Bb715a79A79;
         jack = 0xf667Eb467304D505B9fD484Aa622B9213c1B8920;
         ContractValue = msg.value;
-        BlueCoin_address = ;
+        BlueCoin_address = 0x8eB8431eaA2dd9c4B804A176b6Ac0eEE37cD9e12;
         BlueCoin b = BlueCoin(BlueCoin_address);
         //token = new BlueCoin(100000);
-        
+        b.totalSupply();
         
     }
 
