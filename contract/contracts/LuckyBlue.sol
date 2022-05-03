@@ -5,7 +5,7 @@ import "./BlueCoin.sol";
 
 contract LuckyBlue {
 
-    IERC20 public token; 
+    //IERC20 public token; 
     //event Bought(uint256 amount);
     //event Sold(uint256 amount);
 
@@ -22,6 +22,7 @@ contract LuckyBlue {
     uint256 vendorFee = 2;
     uint256 playerFee = 2;
     uint256 addGameFee = 1;
+    address public BlueCoin_address;
 
     struct Vendor {
         address payable vendorAddress;
@@ -32,8 +33,14 @@ contract LuckyBlue {
         cedric = 0x37813e4e4C751F902763FF5A00337Bb715a79A79;
         jack = 0xf667Eb467304D505B9fD484Aa622B9213c1B8920;
         ContractValue = msg.value;
-        token = new BlueCoin(100000);
+        BlueCoin_address = ;
+        BlueCoin b = BlueCoin(BlueCoin_address);
+        //token = new BlueCoin(100000);
+        
+        
     }
+
+    
 
 
     // function buy() payable public {
@@ -88,7 +95,11 @@ contract LuckyBlue {
         uint256 vendorCut = msg.value / 2;
         ContractValue = address(this).balance + (msg.value / 2);
         PayVendors(uint256(vendorCut)); //sends cut to vendors
-        token.transfer(jack, (msg.value/2));
+        //token.transfer(jack, (msg.value/2));
+        //BlueCoin b = BlueCoin(0xf667Eb467304D505B9fD484Aa622B9213c1B8920);
+       // b.approve(delegate, numTokens);
+       
+       // token.approve(jack, 1000);
     }
 
     // Deregisters a player
